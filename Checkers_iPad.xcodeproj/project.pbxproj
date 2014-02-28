@@ -21,6 +21,7 @@
 		95EA291918C107700090914C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95EA28FB18C107700090914C /* UIKit.framework */; };
 		95EA292118C107700090914C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 95EA291F18C107700090914C /* InfoPlist.strings */; };
 		95EA292318C107700090914C /* Checkers_iPadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA292218C107700090914C /* Checkers_iPadTests.m */; };
+		95EA292E18C1085E0090914C /* CheckersBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA292D18C1085E0090914C /* CheckersBoardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		95EA291E18C107700090914C /* Checkers_iPadTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Checkers_iPadTests-Info.plist"; sourceTree = "<group>"; };
 		95EA292018C107700090914C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		95EA292218C107700090914C /* Checkers_iPadTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Checkers_iPadTests.m; sourceTree = "<group>"; };
+		95EA292C18C1085E0090914C /* CheckersBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckersBoardView.h; sourceTree = "<group>"; };
+		95EA292D18C1085E0090914C /* CheckersBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckersBoardView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +115,8 @@
 		95EA28FD18C107700090914C /* Checkers_iPad */ = {
 			isa = PBXGroup;
 			children = (
+				95EA292C18C1085E0090914C /* CheckersBoardView.h */,
+				95EA292D18C1085E0090914C /* CheckersBoardView.m */,
 				95EA290618C107700090914C /* AppDelegate.h */,
 				95EA290718C107700090914C /* AppDelegate.m */,
 				95EA290918C107700090914C /* Main.storyboard */,
@@ -250,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95EA290E18C107700090914C /* ViewController.m in Sources */,
+				95EA292E18C1085E0090914C /* CheckersBoardView.m in Sources */,
 				95EA290818C107700090914C /* AppDelegate.m in Sources */,
 				95EA290418C107700090914C /* main.m in Sources */,
 			);
