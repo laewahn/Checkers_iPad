@@ -13,7 +13,30 @@ const CGFloat kNumberOfRows = 10.0;
 const CGFloat kBlackFieldColor[] = {0.5, 0.5, 0.5, 1.0};
 const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
 
+@interface CheckersBoardView() {
+    CALayer* stoneLayer;
+}
+
+@end
+
 @implementation CheckersBoardView
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    
+    if (self) {
+        CGRect frame = [super frame];
+        CGRect stoneFrame = CGRectMake(0.0, 0.0, frame.size.width/kNumberOfRows, frame.size.height/kNumberOfRows);
+
+        stoneLayer = [CALayer layer];
+        [stoneLayer setFrame:stoneFrame];
+        [stoneLayer setBackgroundColor:[[UIColor orangeColor] CGColor]];
+        [[self layer] addSublayer:stoneLayer];
+    }
+    
+    return self;
+}
 
 - (void)drawRect:(CGRect)rect
 {
@@ -45,5 +68,32 @@ const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
     }
     
 }
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if ([touches count] == 1) {
+        UITouch* aTouch = [touches anyObject];
+        CGPoint touchPosition = [aTouch locationInView:self];
+        [stoneLayer setPosition:touchPosition];
+//        CABasicAnimation* fadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
+//        [fadeOut setFromValue:@1.0];
+//        [fadeOut setToValue:@0.0];
+//        [fadeOut setDuration:2];
+//        [fadeOut setRemovedOnCompletion:YES];
+//        [fadeOut setFillMode:kCAFillModeForwards];
+//        [fadeOut setDelegate:self];
+//        [fadeOut setValue:stoneLayer forKey:@"parentLayer"];
+//        [stoneLayer addAnimation:fadeOut forKey:@"opacity"];
+        
+    }
+
+}
+
+//-(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+//{
+//    if (flag) {
+//        [stoneLayer removeFromSuperlayer];
+//    }
+//}
 
 @end
