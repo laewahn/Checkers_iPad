@@ -84,9 +84,8 @@ const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
         NSInteger touchedColumn = touchPosition.x / widthOfAField;
         NSInteger touchedRow = touchPosition.y / heightOfAField;
         
-        CGPoint touchedFieldPosition = CGPointMake(touchedColumn * widthOfAField, touchedRow * heightOfAField);
-        
-        [stoneLayer setPosition:touchedFieldPosition];
+        CheckersFieldPosition newPosition = {touchedColumn, touchedRow};
+        [self.delegate boardViewFieldWasSelected:newPosition];
 
 //        CABasicAnimation* fadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
 //        [fadeOut setFromValue:@1.0];
@@ -100,6 +99,12 @@ const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
         
     }
 
+}
+
+-(void) moveStoneToField:(CheckersFieldPosition) position
+{
+    CGPoint fieldPosition = CGPointMake(position.x * widthOfAField, position.y * heightOfAField);
+    [stoneLayer setPosition:fieldPosition];
 }
 
 //-(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag

@@ -26,4 +26,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)boardViewFieldWasSelected:(CheckersFieldPosition)theField
+{
+    [self.boardView moveStoneToField:theField];
+}
+
 @end
