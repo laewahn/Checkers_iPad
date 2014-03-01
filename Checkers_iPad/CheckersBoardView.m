@@ -15,6 +15,9 @@ const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
 
 @interface CheckersBoardView() {
     CALayer* stoneLayer;
+    
+    CGFloat widthOfAField;
+    CGFloat heightOfAField;
 }
 
 @end
@@ -27,11 +30,17 @@ const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
     
     if (self) {
         CGRect frame = [super frame];
-        CGRect stoneFrame = CGRectMake(0.0, 0.0, frame.size.width/kNumberOfRows, frame.size.height/kNumberOfRows);
+        
+        widthOfAField = frame.size.width / kNumberOfRows;
+        heightOfAField = frame.size.height / kNumberOfRows;
+        
+        CGRect stoneFrame = CGRectMake(0.0, 0.0, widthOfAField, heightOfAField);
 
         stoneLayer = [CALayer layer];
+        [stoneLayer setAnchorPoint:CGPointMake(0, 0)];
         [stoneLayer setFrame:stoneFrame];
         [stoneLayer setBackgroundColor:[[UIColor orangeColor] CGColor]];
+
         [[self layer] addSublayer:stoneLayer];
     }
     
@@ -53,16 +62,13 @@ const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
 -(void) drawBoard:(CGContextRef) context
 {
     CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
-
-    CGRect myFrame = [self frame];
-    CGFloat fieldSize = myFrame.size.width/kNumberOfRows;
     
     for (NSInteger row = 0; row < kNumberOfRows; row++) {
         for (NSInteger column = 0; column < kNumberOfRows; column++) {
             const CGFloat* colorComponents = ((column + row) % 2 == 0) ? kWhiteFieldColor : kBlackFieldColor;
             CGContextSetFillColor(context, colorComponents);
             
-            CGRect theField = CGRectMake(fieldSize * column, fieldSize * row, fieldSize, fieldSize);
+            CGRect theField = CGRectMake(widthOfAField * column, heightOfAField * row, widthOfAField, heightOfAField);
             CGContextFillRect(context, theField);
         }
     }
@@ -74,7 +80,14 @@ const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
     if ([touches count] == 1) {
         UITouch* aTouch = [touches anyObject];
         CGPoint touchPosition = [aTouch locationInView:self];
-        [stoneLayer setPosition:touchPosition];
+        
+        NSInteger touchedColumn = touchPosition.x / widthOfAField;
+        NSInteger touchedRow = touchPosition.y / heightOfAField;
+        
+        CGPoint touchedFieldPosition = CGPointMake(touchedColumn * widthOfAField, touchedRow * heightOfAField);
+        
+        [stoneLayer setPosition:touchedFieldPosition];
+
 //        CABasicAnimation* fadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
 //        [fadeOut setFromValue:@1.0];
 //        [fadeOut setToValue:@0.0];
