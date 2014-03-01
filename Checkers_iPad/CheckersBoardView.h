@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-typedef struct CheckersFieldPosition {
-    NSInteger x;
-    NSInteger y;
-} CheckersFieldPosition;
+#import "CheckersDataTypes.h"
 
+@class StoneLayer;
+@class Stone;
 
 @protocol CheckersBoardViewDelegate
 -(void)boardViewFieldWasSelected:(CheckersFieldPosition) theField;
@@ -20,7 +19,8 @@ typedef struct CheckersFieldPosition {
 
 @interface CheckersBoardView : UIView
 
--(void) moveStoneToField:(CheckersFieldPosition) position;
+-(void) addStone:(Stone *)theStone;
+-(void) removeStone:(Stone *)theStone;
 
 @property(assign) IBOutlet id<CheckersBoardViewDelegate> delegate;
 

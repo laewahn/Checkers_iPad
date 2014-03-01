@@ -8,9 +8,18 @@
 
 #import "Stone.h"
 
-
 @implementation Stone
 
 
+-(NSNumber *)stoneID
+{
+    return [NSNumber numberWithInt:[self hash]];
+}
+
+-(BOOL) isInField:(CheckersFieldPosition) theField
+{
+    CheckersFieldPosition myField = [self field];
+    return myField.x == theField.x && myField.y == theField.y;
+}
 
 @end

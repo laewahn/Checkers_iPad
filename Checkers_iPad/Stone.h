@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum CheckersStoneColor {
-    kStoneColorWhite,
-    kStoneColorBlack
-} CheckersStoneColor;
+#import "CheckersDataTypes.h"
 
 @interface Stone : NSObject
 
 @property CheckersStoneColor color;
+@property CheckersFieldPosition field;
+
+-(NSNumber *)stoneID;
+-(BOOL) isInField:(CheckersFieldPosition) theField;
 
 @end

@@ -8,8 +8,12 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+#import "Stone.h"
+#import "StoneLayer.h"
 
+@interface ViewController () {
+    Stone* aStone;
+}
 @end
 
 @implementation ViewController
@@ -17,18 +21,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-}
+    
+    aStone = [[Stone alloc] init];
+    [aStone setColor:kStoneColorBlack];
+    
+    [self.boardView addStone:aStone];
+    
+    Stone* anotherStone = [[Stone alloc] init];
+    [anotherStone setColor:kStoneColorWhite];
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    CheckersFieldPosition field = {5,5};
+    [anotherStone setField:field];
+    
+    [self.boardView addStone:anotherStone];
+
 }
 
 -(void)boardViewFieldWasSelected:(CheckersFieldPosition)theField
 {
-    [self.boardView moveStoneToField:theField];
+    if ([aStone isInField:theField]) {
+        [self.boardView removeStone:aStone];
+    } else {
+        [aStone setField:theField];
+    }
 }
 
 @end

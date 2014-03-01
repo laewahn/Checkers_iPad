@@ -23,6 +23,7 @@
 		95EA292318C107700090914C /* Checkers_iPadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA292218C107700090914C /* Checkers_iPadTests.m */; };
 		95EA292E18C1085E0090914C /* CheckersBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA292D18C1085E0090914C /* CheckersBoardView.m */; };
 		95EA293618C275FC0090914C /* Stone.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA293518C275FC0090914C /* Stone.m */; };
+		95EA293918C2776D0090914C /* StoneLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA293818C2776D0090914C /* StoneLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,9 @@
 		95EA292D18C1085E0090914C /* CheckersBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckersBoardView.m; sourceTree = "<group>"; };
 		95EA293418C275FC0090914C /* Stone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stone.h; sourceTree = "<group>"; };
 		95EA293518C275FC0090914C /* Stone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stone.m; sourceTree = "<group>"; };
+		95EA293718C2776D0090914C /* StoneLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoneLayer.h; sourceTree = "<group>"; };
+		95EA293818C2776D0090914C /* StoneLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoneLayer.m; sourceTree = "<group>"; };
+		95EA293A18C27DD60090914C /* CheckersDataTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheckersDataTypes.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +124,8 @@
 			children = (
 				95EA293418C275FC0090914C /* Stone.h */,
 				95EA293518C275FC0090914C /* Stone.m */,
+				95EA293718C2776D0090914C /* StoneLayer.h */,
+				95EA293818C2776D0090914C /* StoneLayer.m */,
 				95EA292C18C1085E0090914C /* CheckersBoardView.h */,
 				95EA292D18C1085E0090914C /* CheckersBoardView.m */,
 				95EA290618C107700090914C /* AppDelegate.h */,
@@ -129,6 +135,7 @@
 				95EA290D18C107700090914C /* ViewController.m */,
 				95EA290F18C107700090914C /* Images.xcassets */,
 				95EA28FE18C107700090914C /* Supporting Files */,
+				95EA293A18C27DD60090914C /* CheckersDataTypes.h */,
 			);
 			path = Checkers_iPad;
 			sourceTree = "<group>";
@@ -264,6 +271,7 @@
 				95EA292E18C1085E0090914C /* CheckersBoardView.m in Sources */,
 				95EA290818C107700090914C /* AppDelegate.m in Sources */,
 				95EA290418C107700090914C /* main.m in Sources */,
+				95EA293918C2776D0090914C /* StoneLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
