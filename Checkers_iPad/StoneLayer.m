@@ -8,44 +8,32 @@
 
 #import "StoneLayer.h"
 
-#import "Stone.h"
-
 @interface StoneLayer() {
-    Stone* _stone;
     CGSize size;
 }
 @end
 
-void * fieldObserverContext = &fieldObserverContext;
-
 @implementation StoneLayer
 
-+(StoneLayer *)layerForStone:(Stone *)theStone size:(CGSize)theSize;
++(StoneLayer *)layerWithSize:(CGSize)theSize color:(CheckersStoneColor) color;
 {
-    StoneLayer* theLayer = [[StoneLayer alloc] initWithStone:theStone size:theSize];
+    StoneLayer* theLayer = [[StoneLayer alloc] initWithSize:theSize];
     
-    UIColor* stoneColor = ([theStone color] == kStoneColorBlack) ? [UIColor blackColor] : [UIColor orangeColor];
+    UIColor* stoneColor = (color == kStoneColorBlack) ? [UIColor blackColor] : [UIColor orangeColor];
     [theLayer setBackgroundColor:[stoneColor CGColor]];
     
     return theLayer;
 }
 
-- (id)initWithStone:(Stone *)theStone size:(CGSize)theSize
+- (id)initWithSize:(CGSize)theSize
 {
     self = [super init];
     if (self) {
         [self setAnchorPoint:CGPointMake(0, 0)];
 
         size = theSize;
-        _stone = theStone;
-        [_stone addObserver:self forKeyPath:@"field" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:fieldObserverContext];
     }
     return self;
-}
-
--(void)dealloc
-{
-    [_stone removeObserver:self forKeyPath:@"field"];
 }
 
 -(CAAnimation *)createRemoveAnimation
@@ -62,16 +50,5 @@ void * fieldObserverContext = &fieldObserverContext;
     return fadeOut;
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if (context == fieldObserverContext) {
-        
-        CheckersFieldPosition field;
-        [[change valueForKey:NSKeyValueChangeNewKey] getValue:&field];
-        
-        CGPoint newPosition = CGPointMake(field.x * size.width, field.y * size.height);
-        [self setPosition:newPosition];
-    }
-}
 
 @end

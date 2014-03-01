@@ -26,6 +26,8 @@ const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
 
 @end
 
+void * ctxStoneFieldObserver = &ctxStoneFieldObserver;
+
 @implementation CheckersBoardView
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -90,10 +92,12 @@ const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
 
 -(void) addStone:(Stone *)theStone
 {
-    StoneLayer* layer = [StoneLayer layerForStone:theStone size:CGSizeMake(widthOfAField, heightOfAField)];
+    StoneLayer* layer = [StoneLayer layerWithSize:CGSizeMake(widthOfAField, heightOfAField) color:[theStone color]];
+
     [self addStoneLayer:layer];
     
     [stoneLayersIndexedByStoneID setObject:layer forKey:[theStone stoneID]];
+    [theStone addObserver:self forKeyPath:@"field" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:ctxStoneFieldObserver];
 }
 
 -(void) addStoneLayer:(StoneLayer *)theLayer
@@ -115,6 +119,7 @@ const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
     [theLayer addAnimation:layerRemoveAnimation forKey:@"remove"];
     
     [stoneLayersIndexedByStoneID removeObjectForKey:[theStone stoneID]];
+    [theStone removeObserver:self forKeyPath:@"field"];
 }
 
 
@@ -125,5 +130,21 @@ const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
         [layerToRemove removeFromSuperlayer];
     }
 }
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == ctxStoneFieldObserver) {
+        
+        Stone* theStone = (Stone *)object;
+        StoneLayer* theLayer = [stoneLayersIndexedByStoneID objectForKey:[theStone stoneID]];
+        
+        CheckersFieldPosition field;
+        [[change valueForKey:NSKeyValueChangeNewKey] getValue:&field];
+        
+        CGPoint newPosition = CGPointMake(field.x * widthOfAField, field.y * heightOfAField);
+        [theLayer setPosition:newPosition];
+    }
+}
+
 
 @end

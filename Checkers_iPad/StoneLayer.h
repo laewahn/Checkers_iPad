@@ -8,11 +8,11 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-@class Stone;
+#import "CheckersDataTypes.h"
 
 @interface StoneLayer : CALayer
 
-+(StoneLayer *)layerForStone:(Stone *)aStone size:(CGSize)size;
++(StoneLayer *)layerWithSize:(CGSize)theSize color:(CheckersStoneColor) color;
 
 -(CAAnimation *)createRemoveAnimation;
 
