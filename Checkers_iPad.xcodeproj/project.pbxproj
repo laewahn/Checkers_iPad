@@ -22,6 +22,7 @@
 		95EA292118C107700090914C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 95EA291F18C107700090914C /* InfoPlist.strings */; };
 		95EA292318C107700090914C /* Checkers_iPadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA292218C107700090914C /* Checkers_iPadTests.m */; };
 		95EA292E18C1085E0090914C /* CheckersBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA292D18C1085E0090914C /* CheckersBoardView.m */; };
+		95EA293618C275FC0090914C /* Stone.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA293518C275FC0090914C /* Stone.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		95EA292218C107700090914C /* Checkers_iPadTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Checkers_iPadTests.m; sourceTree = "<group>"; };
 		95EA292C18C1085E0090914C /* CheckersBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckersBoardView.h; sourceTree = "<group>"; };
 		95EA292D18C1085E0090914C /* CheckersBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckersBoardView.m; sourceTree = "<group>"; };
+		95EA293418C275FC0090914C /* Stone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stone.h; sourceTree = "<group>"; };
+		95EA293518C275FC0090914C /* Stone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stone.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,8 @@
 		95EA28FD18C107700090914C /* Checkers_iPad */ = {
 			isa = PBXGroup;
 			children = (
+				95EA293418C275FC0090914C /* Stone.h */,
+				95EA293518C275FC0090914C /* Stone.m */,
 				95EA292C18C1085E0090914C /* CheckersBoardView.h */,
 				95EA292D18C1085E0090914C /* CheckersBoardView.m */,
 				95EA290618C107700090914C /* AppDelegate.h */,
@@ -254,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95EA293618C275FC0090914C /* Stone.m in Sources */,
 				95EA290E18C107700090914C /* ViewController.m in Sources */,
 				95EA292E18C1085E0090914C /* CheckersBoardView.m in Sources */,
 				95EA290818C107700090914C /* AppDelegate.m in Sources */,
