@@ -14,6 +14,7 @@
 
 @property CheckersStoneColor color;
 @property CheckersFieldPosition field;
+@property BOOL selected;
 
 -(NSNumber *)stoneID;
 -(BOOL) isInField:(CheckersFieldPosition) theField;

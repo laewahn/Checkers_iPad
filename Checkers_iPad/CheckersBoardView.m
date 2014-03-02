@@ -27,7 +27,7 @@ const CGFloat kWhiteFieldColor[] = {1.0, 1.0, 1.0, 1.0};
 @end
 
 void * ctxStoneFieldObserver = &ctxStoneFieldObserver;
-
+void * ctxStoneSelectedObserver = &ctxStoneSelectedObserver;
 @implementation CheckersBoardView
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -98,6 +98,7 @@ void * ctxStoneFieldObserver = &ctxStoneFieldObserver;
     
     [stoneLayersIndexedByStoneID setObject:layer forKey:[theStone stoneID]];
     [theStone addObserver:self forKeyPath:@"field" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:ctxStoneFieldObserver];
+    [theStone addObserver:self forKeyPath:@"selected" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:ctxStoneSelectedObserver];
 }
 
 -(void) addStoneLayer:(StoneLayer *)theLayer
@@ -120,6 +121,7 @@ void * ctxStoneFieldObserver = &ctxStoneFieldObserver;
     
     [stoneLayersIndexedByStoneID removeObjectForKey:[theStone stoneID]];
     [theStone removeObserver:self forKeyPath:@"field"];
+    [theStone removeObserver:self forKeyPath:@"selected"];
 }
 
 
@@ -143,6 +145,14 @@ void * ctxStoneFieldObserver = &ctxStoneFieldObserver;
         
         CGPoint newPosition = CGPointMake(field.x * widthOfAField, field.y * heightOfAField);
         [theLayer setPosition:newPosition];
+    }
+    
+    if (context == ctxStoneSelectedObserver) {
+        Stone* theStone = (Stone *)object;
+        StoneLayer* theLayer = [stoneLayersIndexedByStoneID objectForKey:[theStone stoneID]];
+        
+        BOOL selected = [[change valueForKey:NSKeyValueChangeNewKey] boolValue];
+        selected ? [theLayer setOpacity:0.75] : [theLayer setOpacity:1.0];
     }
 }
 

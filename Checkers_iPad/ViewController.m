@@ -12,7 +12,7 @@
 #import "StoneLayer.h"
 
 @interface ViewController () {
-    Stone* aStone;
+    NSArray* allStones;
 }
 @end
 
@@ -22,7 +22,7 @@
 {
     [super viewDidLoad];
     
-    aStone = [[Stone alloc] init];
+    Stone* aStone = [[Stone alloc] init];
     [aStone setColor:kStoneColorBlack];
     
     [self.boardView addStone:aStone];
@@ -34,16 +34,21 @@
     [anotherStone setField:field];
     
     [self.boardView addStone:anotherStone];
-
+    
+    allStones = @[aStone, anotherStone];
 }
 
 -(void)boardViewFieldWasSelected:(CheckersFieldPosition)theField
 {
-    if ([aStone isInField:theField]) {
-        [self.boardView removeStone:aStone];
-    } else {
-        [aStone setField:theField];
+    Stone* stoneInField = nil;
+    
+    for (Stone* aStone in allStones) {
+        if ([aStone isInField:theField]) {
+            stoneInField = aStone;
+        }
     }
+    
+    [stoneInField setSelected:![stoneInField selected]];
 }
 
 @end
