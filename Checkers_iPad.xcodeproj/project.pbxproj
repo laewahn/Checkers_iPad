@@ -24,6 +24,9 @@
 		95EA292E18C1085E0090914C /* CheckersBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA292D18C1085E0090914C /* CheckersBoardView.m */; };
 		95EA293618C275FC0090914C /* Stone.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA293518C275FC0090914C /* Stone.m */; };
 		95EA293918C2776D0090914C /* StoneLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA293818C2776D0090914C /* StoneLayer.m */; };
+		95EA293C18C34BA80090914C /* ViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA293B18C34BA80090914C /* ViewControllerTests.m */; };
+		95EA293F18C34E790090914C /* Board.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA293E18C34E790090914C /* Board.m */; };
+		95EA294118C34E930090914C /* BoardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA294018C34E930090914C /* BoardTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +66,10 @@
 		95EA293718C2776D0090914C /* StoneLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoneLayer.h; sourceTree = "<group>"; };
 		95EA293818C2776D0090914C /* StoneLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoneLayer.m; sourceTree = "<group>"; };
 		95EA293A18C27DD60090914C /* CheckersDataTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheckersDataTypes.h; sourceTree = "<group>"; };
+		95EA293B18C34BA80090914C /* ViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerTests.m; sourceTree = "<group>"; };
+		95EA293D18C34E790090914C /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Board.h; sourceTree = "<group>"; };
+		95EA293E18C34E790090914C /* Board.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Board.m; sourceTree = "<group>"; };
+		95EA294018C34E930090914C /* BoardTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +129,8 @@
 		95EA28FD18C107700090914C /* Checkers_iPad */ = {
 			isa = PBXGroup;
 			children = (
+				95EA293D18C34E790090914C /* Board.h */,
+				95EA293E18C34E790090914C /* Board.m */,
 				95EA293418C275FC0090914C /* Stone.h */,
 				95EA293518C275FC0090914C /* Stone.m */,
 				95EA293718C2776D0090914C /* StoneLayer.h */,
@@ -155,7 +164,9 @@
 			isa = PBXGroup;
 			children = (
 				95EA292218C107700090914C /* Checkers_iPadTests.m */,
+				95EA293B18C34BA80090914C /* ViewControllerTests.m */,
 				95EA291D18C107700090914C /* Supporting Files */,
+				95EA294018C34E930090914C /* BoardTests.m */,
 			);
 			path = Checkers_iPadTests;
 			sourceTree = "<group>";
@@ -266,6 +277,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95EA293F18C34E790090914C /* Board.m in Sources */,
 				95EA293618C275FC0090914C /* Stone.m in Sources */,
 				95EA290E18C107700090914C /* ViewController.m in Sources */,
 				95EA292E18C1085E0090914C /* CheckersBoardView.m in Sources */,
@@ -279,6 +291,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95EA294118C34E930090914C /* BoardTests.m in Sources */,
+				95EA293C18C34BA80090914C /* ViewControllerTests.m in Sources */,
 				95EA292318C107700090914C /* Checkers_iPadTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
