@@ -20,7 +20,11 @@
     StoneLayer* theLayer = [[StoneLayer alloc] initWithSize:theSize];
     
     UIColor* stoneColor = (color == kStoneColorBlack) ? [UIColor blackColor] : [UIColor orangeColor];
-    [theLayer setBackgroundColor:[stoneColor CGColor]];
+
+    [theLayer setColor:stoneColor];
+    [theLayer setBorderColor:[[UIColor redColor] CGColor]];
+    [theLayer setCornerRadius:10.0];
+    [theLayer setNeedsDisplay];
     
     return theLayer;
 }
@@ -29,7 +33,11 @@
 {
     self = [super init];
     if (self) {
-        [self setAnchorPoint:CGPointMake(0, 0)];
+        CGRect myFrame = CGRectMake(0, 0, theSize.width, theSize.height);
+        [self setFrame:myFrame];
+        
+        CGPoint anchor = CGPointMake(0.0, 0.0);
+        [self setAnchorPoint:anchor];
 
         size = theSize;
     }
@@ -50,5 +58,16 @@
     return fadeOut;
 }
 
+-(void)drawInContext:(CGContextRef)ctx
+{
+    CGRect myFrame = [self frame];
+    CGRect frameToDraw = CGRectMake(0, 0, myFrame.size.width, myFrame.size.height);
+    
+    CGColorRef theCGColor = [[self color] CGColor];
+    
+    CGContextSetFillColorSpace(ctx, CGColorGetColorSpace(theCGColor));
+    CGContextSetFillColor(ctx, CGColorGetComponents(theCGColor));
+    CGContextFillEllipseInRect(ctx, frameToDraw);
+}
 
 @end

@@ -103,10 +103,6 @@ void * ctxStoneSelectedObserver = &ctxStoneSelectedObserver;
 
 -(void) addStoneLayer:(StoneLayer *)theLayer
 {
-    CGPoint layerPosition = [theLayer position];
-    CGRect defaultStoneFrame = CGRectMake(layerPosition.x, layerPosition.y, widthOfAField, heightOfAField);
-    [theLayer setFrame:defaultStoneFrame];
-
     [[self layer] addSublayer:theLayer];
     
 }
@@ -152,7 +148,7 @@ void * ctxStoneSelectedObserver = &ctxStoneSelectedObserver;
         StoneLayer* theLayer = [stoneLayersIndexedByStoneID objectForKey:[theStone stoneID]];
         
         BOOL selected = [[change valueForKey:NSKeyValueChangeNewKey] boolValue];
-        selected ? [theLayer setOpacity:0.75] : [theLayer setOpacity:1.0];
+        selected ? [theLayer setBorderWidth:2.0] : [theLayer setBorderWidth:0.0];
     }
 }
 

@@ -16,4 +16,6 @@
 
 -(CAAnimation *)createRemoveAnimation;
 
+@property (strong) UIColor* color;
+
 @end
