@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
 
 @interface Checkers_iPadTests : XCTestCase
 
@@ -26,9 +27,14 @@
     [super tearDown];
 }
 
-- (void)testExample
+-(void)testOCMock
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    id arrayMock = [OCMockObject mockForClass:[NSMutableArray class]];
+    [[arrayMock expect] addObject:@"foo"];
+    
+    [arrayMock addObject:@"foo"];
+    
+    [arrayMock verify];
 }
 
 @end
