@@ -41,12 +41,14 @@
     [self setBoard:theBoard];
 }
 
--(void)boardViewFieldWasSelected:(CheckersFieldPosition)theField
+-(void)boardViewFieldWasSelected:(CheckersFieldPosition)nextField
 {
-    Stone* stoneForField = [self.board stoneForField:theField];
+    Stone* stoneForField = [self.board stoneForField:nextField];
     
     if (stoneForField == nil) {
-        [self.selectedStone setField:theField];
+        if ([self moveIsValid:nextField]) {
+            [self.selectedStone setField:nextField];
+        }
     }
     
     if (stoneForField == [self selectedStone]) {
@@ -61,6 +63,16 @@
     [_selectedStone setSelected:NO];
     _selectedStone = selectedStone;
     [_selectedStone setSelected:YES];
+}
+
+-(BOOL)moveIsValid:(CheckersFieldPosition) nextField
+{
+    CheckersFieldPosition currentField = [self.selectedStone field];
+    
+    NSInteger moveX = abs(nextField.x - currentField.x);
+    NSInteger moveY = abs(nextField.y - currentField.y);
+    
+    return moveX == moveY && moveY == 1;
 }
 
 @end

@@ -33,7 +33,7 @@
     CheckersFieldPosition someStoneField = {1,1};
     [someStone setField:someStoneField];
     
-    boardMock = [OCMockObject mockForClass:[Board class]];
+    boardMock = [OCMockObject niceMockForClass:[Board class]];
     [[[boardMock stub] andReturn:someStone] stoneForField:someStoneField];
     [testViewController setBoard:boardMock];
 }
@@ -93,13 +93,35 @@
 
 - (void) testWhenSelectingStoneAndThenSelectingEmptyFieldTheStoneIsMovedToThatField
 {
-    CheckersFieldPosition emptyfield = {1, 2};
+    CheckersFieldPosition emptyfield = {2, 2};
     [[[boardMock stub] andReturn:nil] stoneForField:emptyfield];
     
     [testViewController boardViewFieldWasSelected:[someStone field]];
     [testViewController boardViewFieldWasSelected:emptyfield];
     
     XCTAssertTrue([someStone isInField:emptyfield]);
+}
+
+- (void) testStoneCanOnlyBeMovedDiagonally
+{
+    CheckersFieldPosition currentField = [someStone field];
+    CheckersFieldPosition invalidNextField = {currentField.x + 1,currentField.y + 0};
+    
+    [testViewController boardViewFieldWasSelected:[someStone field]];
+    [testViewController boardViewFieldWasSelected:invalidNextField];
+
+    XCTAssertTrue([someStone isInField:currentField]);
+}
+
+- (void) testStoneCanOnlyBeMovedDiagonallyOneField
+{
+    CheckersFieldPosition currentField = [someStone field];
+    CheckersFieldPosition invalidNextField = {currentField.x + 2,currentField.y + 2};
+
+    [testViewController boardViewFieldWasSelected:[someStone field]];
+    [testViewController boardViewFieldWasSelected:invalidNextField];
+    
+    XCTAssertTrue([someStone isInField:currentField]);
 }
 
 @end
