@@ -9,7 +9,7 @@
 #import "ViewController.h"
 
 #import "Stone.h"
-#import "StoneLayer.h"
+#import "Board.h"
 
 @interface ViewController () {
     NSArray* allStones;
@@ -36,19 +36,31 @@
     [self.boardView addStone:anotherStone];
     
     allStones = @[aStone, anotherStone];
+    Board* theBoard = [[Board alloc] initWithStones:allStones];
+
+    [self setBoard:theBoard];
 }
 
 -(void)boardViewFieldWasSelected:(CheckersFieldPosition)theField
 {
-    Stone* stoneInField = nil;
+    Stone* stoneForField = [self.board stoneForField:theField];
     
-    for (Stone* aStone in allStones) {
-        if ([aStone isInField:theField]) {
-            stoneInField = aStone;
-        }
+    if (stoneForField == nil) {
+        [self.selectedStone setField:theField];
     }
     
-    [stoneInField setSelected:![stoneInField selected]];
+    if (stoneForField == [self selectedStone]) {
+        [self setSelectedStone:nil];
+    } else {
+        [self setSelectedStone:stoneForField];
+    }
+}
+
+-(void)setSelectedStone:(Stone *)selectedStone
+{
+    [_selectedStone setSelected:NO];
+    _selectedStone = selectedStone;
+    [_selectedStone setSelected:YES];
 }
 
 @end

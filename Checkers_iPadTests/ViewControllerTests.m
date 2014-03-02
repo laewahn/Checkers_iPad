@@ -7,28 +7,99 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
 
-@interface ViewControllerTests : XCTestCase
+#import "ViewController.h"
 
+#import "Board.h"
+#import "Stone.h"
+
+@interface ViewControllerTests : XCTestCase {
+    ViewController* testViewController;
+    
+    Stone* someStone;
+    id boardMock;
+}
 @end
 
 @implementation ViewControllerTests
 
-- (void)setUp
+- (void) setUp
 {
-    [super setUp];
-    // Put setup code here; it will be run once, before the first test case.
+    testViewController = [[ViewController alloc] init];
+    [testViewController viewDidLoad];
+    
+    someStone = [[Stone alloc] init];
+    CheckersFieldPosition someStoneField = {1,1};
+    [someStone setField:someStoneField];
+    
+    boardMock = [OCMockObject mockForClass:[Board class]];
+    [[[boardMock stub] andReturn:someStone] stoneForField:someStoneField];
+    [testViewController setBoard:boardMock];
 }
 
-- (void)tearDown
+- (void) testViewControllerKeepsTrackAboutTheSelectedStone
 {
-    // Put teardown code here; it will be run once, after the last test case.
-    [super tearDown];
+    XCTAssertNoThrow([testViewController selectedStone]);
 }
 
-- (void)testExample
+- (void) testAfterLoadingTheViewHasABoard
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    XCTAssertNotNil([testViewController board]);
+}
+
+- (void) testAfterLoadingTheViewNoStoneIsSelected
+{
+    XCTAssertNil([testViewController selectedStone], @"No stone should have been selected yet.");
+}
+
+- (void) testWhenSelectingAFieldWithAStoneTheStoneGetsSelected
+{
+    [testViewController boardViewFieldWasSelected:[someStone field]];
+    XCTAssertTrue([someStone selected]);
+}
+
+- (void) testWhenSelectingAFieldWithAStoneTheStoneIsSetAsSelectedStone
+{
+    [testViewController boardViewFieldWasSelected:[someStone field]];
+    XCTAssertEqualObjects([testViewController selectedStone], someStone);
+}
+
+- (void) testWhenSelectingTheSelectedStoneItGetsUnselected
+{
+    [testViewController boardViewFieldWasSelected:[someStone field]];
+    [testViewController boardViewFieldWasSelected:[someStone field]];
+    
+    XCTAssertFalse([someStone selected]);
+    XCTAssertNil([testViewController selectedStone]);
+}
+
+- (void) testWhenStoneWasSelectedAndAnotherStoneIsSelectedNextTheFirstStoneIsUnselectedAndTheNewStoneIsSelected
+{
+    CheckersFieldPosition secondStoneField = {4,7};
+    Stone* secondStone = [[Stone alloc] init];
+    [secondStone setField:secondStoneField];
+    
+    [[[boardMock stub] andReturn:secondStone] stoneForField:secondStoneField];
+    
+    [testViewController boardViewFieldWasSelected:[someStone field]];
+    [testViewController boardViewFieldWasSelected:[secondStone field]];
+    
+    XCTAssertFalse([someStone selected]);
+    XCTAssertTrue([secondStone selected]);
+    
+    XCTAssertEqualObjects([testViewController selectedStone], secondStone);
+}
+
+- (void) testWhenSelectingStoneAndThenSelectingEmptyFieldTheStoneIsMovedToThatField
+{
+    CheckersFieldPosition emptyfield = {1, 2};
+    [[[boardMock stub] andReturn:nil] stoneForField:emptyfield];
+    
+    [testViewController boardViewFieldWasSelected:[someStone field]];
+    [testViewController boardViewFieldWasSelected:emptyfield];
+    
+    XCTAssertTrue([someStone isInField:emptyfield]);
 }
 
 @end

@@ -10,8 +10,14 @@
 
 #import "CheckersBoardView.h"
 
+@class Stone;
+@class Board;
+
 @interface ViewController : UIViewController<CheckersBoardViewDelegate>
 
 @property (weak, nonatomic) IBOutlet CheckersBoardView *boardView;
+
+@property (nonatomic, strong) Stone* selectedStone;
+@property (strong) Board* board;
 
 @end
