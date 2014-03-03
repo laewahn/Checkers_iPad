@@ -78,12 +78,22 @@
 
 -(BOOL)moveIsValid:(CheckersFieldPosition) nextField
 {
+    BOOL moveIsValid = NO;
+    
     CheckersFieldPosition currentField = [self.selectedStone field];
     
     NSInteger moveX = abs(nextField.x - currentField.x);
     NSInteger moveY = abs(nextField.y - currentField.y);
     
-    return moveX == moveY && moveY == 1;
+    moveIsValid |= (moveX == moveY && moveY == 1);
+
+    CheckersFieldPosition nextFieldInDirection = {currentField.x + copysign(1.0, nextField.x - currentField.x), currentField.y + copysign(1.0, nextField.y - currentField.y)};
+    
+    Stone* stoneInNextFieldInDirection = [self.board stoneForField:nextFieldInDirection];
+    
+    moveIsValid |= (stoneInNextFieldInDirection != nil && [stoneInNextFieldInDirection color] != [self.selectedStone color] && moveX == moveY && moveX == 2);
+    
+    return moveIsValid;
 }
 
 @end
