@@ -22,21 +22,32 @@
 {
     [super viewDidLoad];
     
-    Stone* aStone = [[Stone alloc] init];
-    [aStone setColor:kStoneColorBlack];
+    NSMutableArray* themStones = [NSMutableArray array];
+    NSInteger numStones = 20;
     
-    [self.boardView addStone:aStone];
+    for (NSInteger i = 0; i < numStones; i++) {
+        
+        CheckersFieldPosition initialField = { ((2 * i + 1) % 10 - ( i / 5 % 2)), i / 5};
+        Stone* newStone = [[Stone alloc] init];
+        [newStone setColor:kStoneColorBlack];
+        [newStone setField:initialField];
+        
+        [self.boardView addStone:newStone];
+        [themStones addObject:newStone];
+    }
     
-    Stone* anotherStone = [[Stone alloc] init];
-    [anotherStone setColor:kStoneColorWhite];
-
-    CheckersFieldPosition field = {5,5};
-    [anotherStone setField:field];
+    for (NSInteger i = 0; i < numStones; i++) {
+        
+        CheckersFieldPosition initialField = { ((2 * i + 1) % 10 - (i / 5 % 2)), 6 + i / 5};
+        Stone* newStone = [[Stone alloc] init];
+        [newStone setColor:kStoneColorWhite];
+        [newStone setField:initialField];
+        
+        [self.boardView addStone:newStone];
+        [themStones addObject:newStone];
+    }
     
-    [self.boardView addStone:anotherStone];
-    
-    allStones = @[aStone, anotherStone];
-    Board* theBoard = [[Board alloc] initWithStones:allStones];
+    Board* theBoard = [[Board alloc] initWithStones:themStones];
 
     [self setBoard:theBoard];
 }
