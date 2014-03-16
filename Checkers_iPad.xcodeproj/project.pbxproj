@@ -27,6 +27,7 @@
 		95EA293C18C34BA80090914C /* ViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA293B18C34BA80090914C /* ViewControllerTests.m */; };
 		95EA293F18C34E790090914C /* Board.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA293E18C34E790090914C /* Board.m */; };
 		95EA294118C34E930090914C /* BoardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95EA294018C34E930090914C /* BoardTests.m */; };
+		95F2AD8018C632390059B62F /* Wood-Pattern-Background-1280x800.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 95F2AD7F18C632390059B62F /* Wood-Pattern-Background-1280x800.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		95EA293D18C34E790090914C /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Board.h; sourceTree = "<group>"; };
 		95EA293E18C34E790090914C /* Board.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Board.m; sourceTree = "<group>"; };
 		95EA294018C34E930090914C /* BoardTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardTests.m; sourceTree = "<group>"; };
+		95F2AD7F18C632390059B62F /* Wood-Pattern-Background-1280x800.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Wood-Pattern-Background-1280x800.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 		95EA28FE18C107700090914C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				95F2AD7F18C632390059B62F /* Wood-Pattern-Background-1280x800.jpg */,
 				95EA28FF18C107700090914C /* Checkers_iPad-Info.plist */,
 				95EA290018C107700090914C /* InfoPlist.strings */,
 				95EA290318C107700090914C /* main.m */,
@@ -256,6 +259,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95F2AD8018C632390059B62F /* Wood-Pattern-Background-1280x800.jpg in Resources */,
 				95EA291018C107700090914C /* Images.xcassets in Resources */,
 				95EA290218C107700090914C /* InfoPlist.strings in Resources */,
 				95EA290B18C107700090914C /* Main.storyboard in Resources */,
@@ -524,6 +528,7 @@
 				95EA292818C107700090914C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		95EA292918C107700090914C /* Build configuration list for PBXNativeTarget "Checkers_iPadTests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +537,7 @@
 				95EA292B18C107700090914C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
