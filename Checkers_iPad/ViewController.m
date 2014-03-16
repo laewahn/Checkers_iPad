@@ -12,7 +12,7 @@
 #import "Board.h"
 
 @interface ViewController () {
-    NSArray* allStones;
+	CheckersStoneColor currentPlayerColor;
 }
 @end
 
@@ -22,6 +22,7 @@
 {
     [super viewDidLoad];
     
+	currentPlayerColor = kStoneColorBlack;
     NSMutableArray* themStones = [NSMutableArray array];
     NSInteger numStones = 20;
     
@@ -48,25 +49,29 @@
     }
     
     Board* theBoard = [[Board alloc] initWithStones:themStones];
-
+	
     [self setBoard:theBoard];
 }
 
 -(void)boardViewFieldWasSelected:(CheckersFieldPosition)nextField
 {
     Stone* stoneForField = [self.board stoneForField:nextField];
-    
-    if (stoneForField == nil) {
-        if ([self moveIsValid:nextField]) {
-            [self.selectedStone setField:nextField];
-        }
-    }
-    
-    if (stoneForField == [self selectedStone]) {
-        [self setSelectedStone:nil];
-    } else {
-        [self setSelectedStone:stoneForField];
-    }
+	
+	if ([self selectedStone] || stoneForField.color == currentPlayerColor) {
+		
+		if (stoneForField == nil) {
+			if ([self moveIsValid:nextField]) {
+				[self.selectedStone setField:nextField];
+				currentPlayerColor = (currentPlayerColor == kStoneColorBlack) ? kStoneColorWhite : kStoneColorBlack;
+			}
+		}
+		
+		if (stoneForField != [self selectedStone]) {
+			[self setSelectedStone:stoneForField];
+		} else {
+			[self setSelectedStone:nil];
+		}
+	}
 }
 
 -(void)setSelectedStone:(Stone *)selectedStone
@@ -86,7 +91,7 @@
     NSInteger moveY = abs(nextField.y - currentField.y);
     
     moveIsValid |= (moveX == moveY && moveY == 1);
-
+	
     CheckersFieldPosition nextFieldInDirection = {currentField.x + copysign(1.0, nextField.x - currentField.x), currentField.y + copysign(1.0, nextField.y - currentField.y)};
     
     Stone* stoneInNextFieldInDirection = [self.board stoneForField:nextFieldInDirection];

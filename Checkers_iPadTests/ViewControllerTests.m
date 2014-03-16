@@ -18,6 +18,8 @@
     ViewController* testViewController;
     
     Stone* someStone;
+	Stone* opponentStone;
+	
     id boardMock;
 }
 @end
@@ -103,6 +105,17 @@
     XCTAssertTrue([someStone isInField:emptyfield]);
 }
 
+- (void)testWhenMovingStoneTheStoneIsUnselected
+{
+    CheckersFieldPosition emptyfield = {2, 2};
+    [[[boardMock stub] andReturn:nil] stoneForField:emptyfield];
+    
+    [testViewController boardViewFieldWasSelected:[someStone field]];
+    [testViewController boardViewFieldWasSelected:emptyfield];
+    
+	XCTAssertNil([testViewController selectedStone]);
+}
+
 - (void) testStoneCanOnlyBeMovedDiagonally
 {
     CheckersFieldPosition currentField = [someStone field];
@@ -181,9 +194,45 @@
     XCTAssertTrue([someStone isInField:nextPosition]);
 }
 
+- (void) testWhenOnePlayerMovesStoneHeCannotSelectAnotherStone
+{
+	CheckersFieldPosition currentField = [someStone field];
+	CheckersFieldPosition nextField = {currentField.x + 1, currentField.y + 1};
+
+	CheckersFieldPosition opponentsField = {5,5};
+	[self putOpponentStoneOnField:opponentsField];
+	
+	[testViewController boardViewFieldWasSelected:currentField];
+	[testViewController boardViewFieldWasSelected:nextField];
+	[[[boardMock stub] andReturn:someStone] stoneForField:nextField];
+	
+	[testViewController boardViewFieldWasSelected:nextField];
+	
+	XCTAssertNotEqualObjects([testViewController selectedStone], someStone);
+}
+
+- (void)testWhenOnePlayerMovesStoneTheOtherPlayerCanSelectStone
+{
+    CheckersFieldPosition currentField = [someStone field];
+	CheckersFieldPosition nextField = {currentField.x + 1, currentField.y + 1};
+	
+	CheckersFieldPosition opponentsField = {5,5};
+	[self putOpponentStoneOnField:opponentsField];
+	
+	[testViewController boardViewFieldWasSelected:currentField];
+	[testViewController boardViewFieldWasSelected:nextField];
+	
+	[testViewController boardViewFieldWasSelected:opponentsField];
+	
+	XCTAssertNotEqualObjects([testViewController selectedStone], someStone);
+	XCTAssertEqualObjects([testViewController selectedStone], opponentStone);
+}
+
+# pragma mark Helpers
+
 - (void) putOpponentStoneOnField: (CheckersFieldPosition) opponentsField
 {
-    Stone* opponentStone = [[Stone alloc] init];
+    opponentStone = [[Stone alloc] init];
     [opponentStone setField:opponentsField];
     [opponentStone setColor:kStoneColorWhite];
     [[[boardMock stub] andReturn:opponentStone] stoneForField:opponentsField];
