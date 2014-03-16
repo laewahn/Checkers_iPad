@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet CheckersBoardView *boardView;
 
 @property (nonatomic, strong) Stone* selectedStone;
+@property (nonatomic, assign) CheckersStoneColor currentPlayerColor;
+
 @property (strong) Board* board;
 
 @end

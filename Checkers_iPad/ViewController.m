@@ -12,7 +12,7 @@
 #import "Board.h"
 
 @interface ViewController () {
-	CheckersStoneColor currentPlayerColor;
+
 }
 @end
 
@@ -22,7 +22,7 @@
 {
     [super viewDidLoad];
     
-	currentPlayerColor = kStoneColorBlack;
+	_currentPlayerColor = kStoneColorBlack;
     NSMutableArray* themStones = [NSMutableArray array];
     NSInteger numStones = 20;
     
@@ -57,12 +57,12 @@
 {
     Stone* stoneForField = [self.board stoneForField:nextField];
 	
-	if ([self selectedStone] || stoneForField.color == currentPlayerColor) {
+	if ([self selectedStone] || stoneForField.color == [self currentPlayerColor]) {
 		
 		if (stoneForField == nil) {
 			if ([self moveIsValid:nextField]) {
 				[self.selectedStone setField:nextField];
-				currentPlayerColor = (currentPlayerColor == kStoneColorBlack) ? kStoneColorWhite : kStoneColorBlack;
+				[self setCurrentPlayerColor:([self currentPlayerColor] == kStoneColorBlack) ? kStoneColorWhite : kStoneColorBlack];
 			}
 		}
 		
@@ -87,22 +87,26 @@
     
     CheckersFieldPosition currentField = [self.selectedStone field];
     
-    NSInteger moveX = abs(nextField.x - currentField.x);
-    NSInteger moveY = abs(nextField.y - currentField.y);
+    NSInteger moveX = nextField.x - currentField.x;
+    NSInteger moveY = nextField.y - currentField.y;
     
-    moveIsValid |= (moveX == moveY && moveY == 1);
+    moveIsValid |= ((abs(moveX) == abs(moveY) && moveY == 1 && [self currentPlayerColor] == kStoneColorBlack) ||
+					(abs(moveX) == abs(moveY) && moveY == -1 && [self currentPlayerColor] == kStoneColorWhite) );
 	
     CheckersFieldPosition nextFieldInDirection = {currentField.x + copysign(1.0, nextField.x - currentField.x), currentField.y + copysign(1.0, nextField.y - currentField.y)};
     
     Stone* stoneInNextFieldInDirection = [self.board stoneForField:nextFieldInDirection];
     
-	BOOL canCaptureOpponentStone = (stoneInNextFieldInDirection != nil && [stoneInNextFieldInDirection color] != [self.selectedStone color] && moveX == moveY && moveX == 2);
-	if (canCaptureOpponentStone) {
+	BOOL canCaptureOpponentStone = stoneInNextFieldInDirection != nil && [stoneInNextFieldInDirection color] != [self.selectedStone color];
+	BOOL captureMoveIsValid =	(abs(moveX) == abs(moveY) && moveY == 2 && [self currentPlayerColor] == kStoneColorBlack) ||
+								(abs(moveX) == abs(moveY) && moveY == -2 && [self currentPlayerColor] == kStoneColorWhite);
+	
+	if (canCaptureOpponentStone && captureMoveIsValid) {
 		[self.board removeStone:stoneInNextFieldInDirection];
 		[self.boardView removeStone:stoneInNextFieldInDirection];
 	}
 	
-	moveIsValid |= canCaptureOpponentStone;
+	moveIsValid |= canCaptureOpponentStone && captureMoveIsValid;
     
 	return moveIsValid;
 }

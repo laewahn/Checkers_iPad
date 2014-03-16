@@ -20,6 +20,8 @@
     Stone* someStone;
 	Stone* opponentStone;
 	
+	CheckersFieldPosition currentField;
+	
     id boardMock;
 }
 @end
@@ -32,12 +34,13 @@
     [testViewController viewDidLoad];
     
     someStone = [[Stone alloc] init];
-    CheckersFieldPosition someStoneField = {1,1};
-    [someStone setField:someStoneField];
+
+	currentField.x = 1; currentField.y = 1;
+    [someStone setField:currentField];
     [someStone setColor:kStoneColorBlack];
     
     boardMock = [OCMockObject niceMockForClass:[Board class]];
-    [[[boardMock stub] andReturn:someStone] stoneForField:someStoneField];
+    [[[boardMock stub] andReturn:someStone] stoneForField:currentField];
     [testViewController setBoard:boardMock];
 }
 
@@ -116,9 +119,21 @@
 	XCTAssertNil([testViewController selectedStone]);
 }
 
+
+# pragma mark Allowed movements
+
+//      N
+//
+// W    + - - > x   E
+//      |
+//      |
+//      |
+//      V  y
+//
+//      S
+
 - (void) testStoneCanOnlyBeMovedDiagonally
 {
-    CheckersFieldPosition currentField = [someStone field];
     CheckersFieldPosition invalidNextField = {currentField.x + 1,currentField.y + 0};
     
     [testViewController boardViewFieldWasSelected:[someStone field]];
@@ -129,7 +144,6 @@
 
 - (void) testStoneCanOnlyBeMovedDiagonallyOneField
 {
-    CheckersFieldPosition currentField = [someStone field];
     CheckersFieldPosition invalidNextField = {currentField.x + 2,currentField.y + 2};
 
     [testViewController boardViewFieldWasSelected:[someStone field]];
@@ -138,9 +152,34 @@
     XCTAssertTrue([someStone isInField:currentField]);
 }
 
+- (void)testBlackPlayerCannotMoveStoneBackwards
+{
+    CheckersFieldPosition invalidMove = {currentField.x - 1, currentField.y - 1};
+	
+	[testViewController boardViewFieldWasSelected:currentField];
+	[testViewController boardViewFieldWasSelected:invalidMove];
+	
+	XCTAssertTrue([someStone isInField:currentField]);
+	XCTAssertFalse([someStone isInField:invalidMove]);
+}
+
+- (void)testWhitePlayerCannotMoveStoneBackward
+{
+	CheckersFieldPosition opponentField = {5,5};
+	[self putOpponentStoneOnField:opponentField];
+	
+	CheckersFieldPosition invalidMove = {opponentField.x + 1, opponentField.y + 1};
+
+	[testViewController setCurrentPlayerColor:kStoneColorWhite];
+	[testViewController boardViewFieldWasSelected:opponentField];
+	[testViewController boardViewFieldWasSelected:invalidMove];
+	
+	XCTAssertTrue([opponentStone isInField:opponentField]);
+	XCTAssertFalse([someStone isInField:invalidMove]);
+}
+
 - (void) testStoneCanBeMovedSouthEastTwoFieldsIfHeCanCaptureAnOponentStone
 {
-    CheckersFieldPosition currentField = [someStone field];
     CheckersFieldPosition opponentsField = {currentField.x + 1, currentField.y + 1};
     CheckersFieldPosition nextPosition = {currentField.x + 2, currentField.y + 2};
     
@@ -152,37 +191,8 @@
     XCTAssertTrue([someStone isInField:nextPosition]);
 }
 
-- (void) testStoneCanBeMovedNorthWestTwoFieldsIfHeCanCaptureAnOponentStone
-{
-    CheckersFieldPosition currentField = [someStone field];
-    CheckersFieldPosition opponentsField = {currentField.x - 1, currentField.y - 1};
-    CheckersFieldPosition nextPosition = {currentField.x - 2, currentField.y - 2};
-    
-    [self putOpponentStoneOnField:opponentsField];
-    
-    [testViewController boardViewFieldWasSelected:currentField];
-    [testViewController boardViewFieldWasSelected:nextPosition];
-    
-    XCTAssertTrue([someStone isInField:nextPosition]);
-}
-
 - (void) testStoneCanBeMovedSouthWestTwoFieldsIfHeCanCaptureAnOponentStone
 {
-    CheckersFieldPosition currentField = [someStone field];
-    CheckersFieldPosition opponentsField = {currentField.x + 1, currentField.y - 1};
-    CheckersFieldPosition nextPosition = {currentField.x + 2, currentField.y - 2};
-    
-    [self putOpponentStoneOnField:opponentsField];
-    
-    [testViewController boardViewFieldWasSelected:currentField];
-    [testViewController boardViewFieldWasSelected:nextPosition];
-    
-    XCTAssertTrue([someStone isInField:nextPosition]);
-}
-
-- (void) testStoneCanBeMovedNorthEastTwoFieldsIfHeCanCaptureAnOponentStone
-{
-    CheckersFieldPosition currentField = [someStone field];
     CheckersFieldPosition opponentsField = {currentField.x - 1, currentField.y + 1};
     CheckersFieldPosition nextPosition = {currentField.x - 2, currentField.y + 2};
     
@@ -194,9 +204,37 @@
     XCTAssertTrue([someStone isInField:nextPosition]);
 }
 
+- (void) testStoneCanBeMovedNorthWestTwoFieldsIfHeCanCaptureAnOponentStone
+{
+    CheckersFieldPosition opponentsField = {currentField.x + 1, currentField.y + 1};
+    CheckersFieldPosition nextPosition = {currentField.x - 1, currentField.y - 1};
+    
+	[testViewController setCurrentPlayerColor:kStoneColorWhite];
+    [self putOpponentStoneOnField:opponentsField];
+    
+    [testViewController boardViewFieldWasSelected:opponentsField];
+    [testViewController boardViewFieldWasSelected:nextPosition];
+    
+    XCTAssertTrue([opponentStone isInField:nextPosition]);
+}
+
+
+- (void) testStoneCanBeMovedNorthEastTwoFieldsIfHeCanCaptureAnOponentStone
+{
+    CheckersFieldPosition opponentsField = {currentField.x - 1, currentField.y + 1};
+    CheckersFieldPosition nextPosition = {currentField.x + 1, currentField.y - 1};
+    
+	[testViewController setCurrentPlayerColor:kStoneColorWhite];
+    [self putOpponentStoneOnField:opponentsField];
+    
+    [testViewController boardViewFieldWasSelected:opponentsField];
+    [testViewController boardViewFieldWasSelected:nextPosition];
+    
+    XCTAssertTrue([opponentStone isInField:nextPosition]);
+}
+
 - (void) testWhenOnePlayerMovesStoneHeCannotSelectAnotherStone
 {
-	CheckersFieldPosition currentField = [someStone field];
 	CheckersFieldPosition nextField = {currentField.x + 1, currentField.y + 1};
 
 	CheckersFieldPosition opponentsField = {5,5};
@@ -213,7 +251,6 @@
 
 - (void)testWhenOnePlayerMovesStoneTheOtherPlayerCanSelectStone
 {
-    CheckersFieldPosition currentField = [someStone field];
 	CheckersFieldPosition nextField = {currentField.x + 1, currentField.y + 1};
 	
 	CheckersFieldPosition opponentsField = {5,5};
@@ -233,7 +270,6 @@
 	id boardViewMock = [OCMockObject mockForClass:[CheckersBoardView class]];
 	[testViewController setBoardView:boardViewMock];
 
-	CheckersFieldPosition currentField = [someStone field];
 	CheckersFieldPosition opponentsField = {currentField.x + 1, currentField.y + 1};
 	CheckersFieldPosition nextPosition = {currentField.x + 2, currentField.y + 2};
 
