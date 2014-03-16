@@ -227,7 +227,7 @@
 		95EA28EC18C107700090914C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = laewahn;
 				TargetAttributes = {
 					95EA291418C107700090914C = {
@@ -343,7 +343,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -383,7 +382,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -442,7 +440,6 @@
 		95EA292A18C107700090914C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Checkers_iPad.app/Checkers_iPad";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -467,7 +464,7 @@
 					"-framework",
 					XCTest,
 					"-ObjC",
-					"-forceLoad",
+					"-force_load",
 					"\"$(SRCROOT)/Checkers_iPadTests/usr/lib/libOCMock.a\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -479,7 +476,6 @@
 		95EA292B18C107700090914C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Checkers_iPad.app/Checkers_iPad";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -500,7 +496,7 @@
 					"-framework",
 					XCTest,
 					"-ObjC",
-					"-forceLoad",
+					"-force_load",
 					"\"$(SRCROOT)/Checkers_iPadTests/usr/lib/libOCMock.a\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
