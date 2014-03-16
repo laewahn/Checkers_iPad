@@ -96,9 +96,15 @@
     
     Stone* stoneInNextFieldInDirection = [self.board stoneForField:nextFieldInDirection];
     
-    moveIsValid |= (stoneInNextFieldInDirection != nil && [stoneInNextFieldInDirection color] != [self.selectedStone color] && moveX == moveY && moveX == 2);
+	BOOL canCaptureOpponentStone = (stoneInNextFieldInDirection != nil && [stoneInNextFieldInDirection color] != [self.selectedStone color] && moveX == moveY && moveX == 2);
+	if (canCaptureOpponentStone) {
+		[self.board removeStone:stoneInNextFieldInDirection];
+		[self.boardView removeStone:stoneInNextFieldInDirection];
+	}
+	
+	moveIsValid |= canCaptureOpponentStone;
     
-    return moveIsValid;
+	return moveIsValid;
 }
 
 @end

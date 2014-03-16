@@ -228,6 +228,27 @@
 	XCTAssertEqualObjects([testViewController selectedStone], opponentStone);
 }
 
+- (void) testWhenCapturingOpponentStoneThatStoneGetsRemoved
+{
+	id boardViewMock = [OCMockObject mockForClass:[CheckersBoardView class]];
+	[testViewController setBoardView:boardViewMock];
+
+	CheckersFieldPosition currentField = [someStone field];
+	CheckersFieldPosition opponentsField = {currentField.x + 1, currentField.y + 1};
+	CheckersFieldPosition nextPosition = {currentField.x + 2, currentField.y + 2};
+
+	[self putOpponentStoneOnField:opponentsField];
+
+	[[boardViewMock expect] removeStone:opponentStone];
+	[[boardMock expect] removeStone:opponentStone];
+
+	[testViewController boardViewFieldWasSelected:currentField];
+	[testViewController boardViewFieldWasSelected:nextPosition];
+	
+	[boardMock verify];
+	[boardViewMock verify];
+}
+
 # pragma mark Helpers
 
 - (void) putOpponentStoneOnField: (CheckersFieldPosition) opponentsField

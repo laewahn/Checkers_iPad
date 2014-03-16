@@ -11,7 +11,7 @@
 #import "Stone.h"
 
 @interface Board () {
-    NSArray* allStones;
+    NSMutableArray* allStones;
 }
 
 @end
@@ -22,7 +22,7 @@
 {
     self = [super init];
     if (self) {
-        allStones = stones;
+        allStones = [NSMutableArray arrayWithArray:stones];
     }
     return self;
 }
@@ -39,6 +39,11 @@
     }
     
     return stoneToReturn;
+}
+
+- (void) removeStone:(Stone *)theStone
+{
+	[allStones removeObject:theStone];
 }
 
 @end

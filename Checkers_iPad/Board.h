@@ -17,5 +17,6 @@
 - (id)initWithStones:(NSArray *)stones;
 
 - (Stone *) stoneForField:(CheckersFieldPosition) field;
+- (void) removeStone:(Stone *)theStone;
 
 @end

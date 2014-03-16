@@ -53,4 +53,10 @@
     XCTAssertNil([testBoard stoneForField:noStoneField]);
 }
 
+- (void)testStonesCanBeRemovedFromTheBoard
+{
+	XCTAssertNoThrow([testBoard removeStone:aStone]);
+	XCTAssertNil([testBoard stoneForField:[aStone field]]);
+}
+
 @end
