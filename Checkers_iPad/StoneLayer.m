@@ -22,8 +22,8 @@
     UIColor* stoneColor = (color == kStoneColorBlack) ? [UIColor blackColor] : [UIColor orangeColor];
 
     [theLayer setColor:stoneColor];
-    [theLayer setBorderColor:[[UIColor redColor] CGColor]];
-    [theLayer setCornerRadius:10.0];
+    [theLayer setBorderColor:[[UIColor greenColor] CGColor]];
+    [theLayer setCornerRadius:20.0];
     [theLayer setNeedsDisplay];
     
     return theLayer;

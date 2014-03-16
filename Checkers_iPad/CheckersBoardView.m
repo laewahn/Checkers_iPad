@@ -148,7 +148,7 @@ void * ctxStoneSelectedObserver = &ctxStoneSelectedObserver;
         StoneLayer* theLayer = [stoneLayersIndexedByStoneID objectForKey:[theStone stoneID]];
         
         BOOL selected = [[change valueForKey:NSKeyValueChangeNewKey] boolValue];
-        selected ? [theLayer setBorderWidth:2.0] : [theLayer setBorderWidth:0.0];
+        selected ? [theLayer setBorderWidth:5.0] : [theLayer setBorderWidth:0.0];
     }
 }
 
