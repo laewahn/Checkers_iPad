@@ -131,10 +131,10 @@
 	}
 	
 	CheckersFieldPosition currentField = [self.selectedStone field];
-	CheckersFieldPosition nextFieldInDirection = {currentField.x + copysign(1.0, move.x - currentField.x), currentField.y + copysign(1.0, move.y - currentField.y)};
+	CheckersFieldPosition nextFieldInDirection = {currentField.x + copysign(1.0, move.x), currentField.y + copysign(1.0, move.y)};
     
     Stone* stoneInNextFieldInDirection = [self.board stoneForField:nextFieldInDirection];
-	BOOL canCaptureOpponentStone = stoneInNextFieldInDirection != nil && [stoneInNextFieldInDirection color] != [self.selectedStone color];
+	BOOL canCaptureOpponentStone = (stoneInNextFieldInDirection != nil && [stoneInNextFieldInDirection color] != [self.selectedStone color]);
 	
 	return canCaptureOpponentStone && captureMoveIsValid;
 }
