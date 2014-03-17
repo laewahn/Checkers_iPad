@@ -62,16 +62,22 @@
 		if (stoneForField == nil) {
 			if ([self moveIsValid:nextField]) {
 				[self.selectedStone setField:nextField];
-				[self setCurrentPlayerColor:([self currentPlayerColor] == kStoneColorBlack) ? kStoneColorWhite : kStoneColorBlack];
+				[self switchPlayers];
 			}
 		}
 		
-		if (stoneForField != [self selectedStone]) {
-			[self setSelectedStone:stoneForField];
-		} else {
-			[self setSelectedStone:nil];
+		if (stoneForField == [self selectedStone]) {
+			stoneForField = nil;
 		}
+		
+		[self setSelectedStone:stoneForField];
 	}
+}
+
+-(void)switchPlayers
+{
+	CheckersStoneColor nextPlayerColor = ([self currentPlayerColor] == kStoneColorBlack) ? kStoneColorWhite : kStoneColorBlack;
+	[self setCurrentPlayerColor:nextPlayerColor];
 }
 
 -(void)setSelectedStone:(Stone *)selectedStone
@@ -86,14 +92,45 @@
     BOOL moveIsValid = NO;
     
     CheckersFieldPosition currentField = [self.selectedStone field];
+	moveIsValid |= [self moveIsNormalMove:nextField];
+	
+	if (moveIsValid) {
+		return moveIsValid;
+	}
+	
+    CheckersFieldPosition nextFieldInDirection = {currentField.x + copysign(1.0, nextField.x - currentField.x), currentField.y + copysign(1.0, nextField.y - currentField.y)};
+    Stone* stoneInNextFieldInDirection = [self.board stoneForField:nextFieldInDirection];
+	moveIsValid |= [self moveIsCaptureMove:nextField];
+    
+	if (moveIsValid) {
+		[self.board removeStone:stoneInNextFieldInDirection];
+		[self.boardView removeStone:stoneInNextFieldInDirection];
+		return moveIsValid;
+	}
+	
+	return NO;
+}
+
+-(BOOL)moveIsNormalMove:(CheckersFieldPosition) nextField
+{
+	CheckersFieldPosition currentField = [self.selectedStone field];
     
     NSInteger moveX = nextField.x - currentField.x;
     NSInteger moveY = nextField.y - currentField.y;
     
-    moveIsValid |= ((abs(moveX) == abs(moveY) && moveY == 1 && [self currentPlayerColor] == kStoneColorBlack) ||
-					(abs(moveX) == abs(moveY) && moveY == -1 && [self currentPlayerColor] == kStoneColorWhite) );
+    return ((abs(moveX) == abs(moveY) && moveY == 1 && [self currentPlayerColor] == kStoneColorBlack) ||
+			(abs(moveX) == abs(moveY) && moveY == -1 && [self currentPlayerColor] == kStoneColorWhite) );
 	
-    CheckersFieldPosition nextFieldInDirection = {currentField.x + copysign(1.0, nextField.x - currentField.x), currentField.y + copysign(1.0, nextField.y - currentField.y)};
+}
+
+-(BOOL)moveIsCaptureMove:(CheckersFieldPosition) nextField
+{
+	CheckersFieldPosition currentField = [self.selectedStone field];
+	
+	NSInteger moveX = nextField.x - currentField.x;
+    NSInteger moveY = nextField.y - currentField.y;
+	
+	CheckersFieldPosition nextFieldInDirection = {currentField.x + copysign(1.0, nextField.x - currentField.x), currentField.y + copysign(1.0, nextField.y - currentField.y)};
     
     Stone* stoneInNextFieldInDirection = [self.board stoneForField:nextFieldInDirection];
     
@@ -101,14 +138,7 @@
 	BOOL captureMoveIsValid =	(abs(moveX) == abs(moveY) && moveY == 2 && [self currentPlayerColor] == kStoneColorBlack) ||
 								(abs(moveX) == abs(moveY) && moveY == -2 && [self currentPlayerColor] == kStoneColorWhite);
 	
-	if (canCaptureOpponentStone && captureMoveIsValid) {
-		[self.board removeStone:stoneInNextFieldInDirection];
-		[self.boardView removeStone:stoneInNextFieldInDirection];
-	}
-	
-	moveIsValid |= canCaptureOpponentStone && captureMoveIsValid;
-    
-	return moveIsValid;
+	return canCaptureOpponentStone && captureMoveIsValid;
 }
 
 @end
