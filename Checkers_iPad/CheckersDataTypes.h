@@ -11,6 +11,8 @@ typedef struct CheckersFieldPosition {
     NSInteger y;
 } CheckersFieldPosition;
 
+typedef CheckersFieldPosition CheckersMove;
+
 typedef enum CheckersStoneColor {
     kStoneColorWhite,
     kStoneColorBlack
